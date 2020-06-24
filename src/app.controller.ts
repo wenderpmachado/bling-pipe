@@ -1,5 +1,7 @@
-import { Controller, Get } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/no-empty-function */
+import { Controller, Get, Redirect } from '@nestjs/common';
 import { AppService } from './app.service';
+import { ApiExcludeEndpoint } from '@nestjs/swagger';
 
 @Controller()
 export class AppController {
@@ -9,4 +11,9 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+
+  @Get('docs')
+  @Redirect('/docs')
+  @ApiExcludeEndpoint()
+  getDocs(): any {}
 }

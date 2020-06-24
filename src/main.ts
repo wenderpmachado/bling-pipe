@@ -1,17 +1,20 @@
 import * as compression from 'compression';
-import * as helmet from 'helmet';
 import * as rateLimit from 'express-rate-limit';
+import * as helmet from 'helmet';
 import { INestApplication } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
+import { AppModule } from './app.module';
+import { HttpExceptionFilter } from './core/filters/http-exception-filter.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
 
   configMiddlewares(app, configService);
+  configInterceptors(app);
   setAPIVersion(app, configService);
   configOpenAPI(app, configService);
 
@@ -49,6 +52,11 @@ function configMiddlewares(app: INestApplication, configService: ConfigService) 
       max: configService.get<number>('API_RATE_LIMIT_MAX'), // limit each IP to 100 requests per windowMs
     }),
   )
+}
+
+function configInterceptors(app: INestApplication) {
+  const { httpAdapter } = app.get(HttpAdapterHost);
+  app.useGlobalFilters(new HttpExceptionFilter(httpAdapter));
 }
 
 bootstrap();
