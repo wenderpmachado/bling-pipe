@@ -1,4 +1,5 @@
 import * as compression from 'compression';
+import * as helmet from 'helmet';
 import { INestApplication } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
@@ -40,6 +41,7 @@ function setAPIVersion(app: INestApplication, configService: ConfigService) {
 
 function configMiddlewares(app: INestApplication) {
   app.use(compression());
+  app.use(helmet());
 }
 
 bootstrap();
