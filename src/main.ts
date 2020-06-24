@@ -1,3 +1,4 @@
+import * as compression from 'compression';
 import { INestApplication } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
@@ -8,14 +9,15 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
 
+  configMiddlewares(app);
   setAPIVersion(app, configService);
-  bootstrapOpenAPI(app, configService);
+  configOpenAPI(app, configService);
 
   const port = configService.get('API_PORT') || 3000;
   await app.listen(port);
 }
 
-function bootstrapOpenAPI(app: INestApplication, configService: ConfigService) {
+function configOpenAPI(app: INestApplication, configService: ConfigService) {
   const versionNumber = configService.get('API_VERSION') || 1;
   const version = `v${versionNumber}.0`;
 
@@ -34,6 +36,10 @@ function setAPIVersion(app: INestApplication, configService: ConfigService) {
   const versionNumber = configService.get('API_VERSION') || 1;
   const version = `v${versionNumber}`;
   app.setGlobalPrefix(version);
+}
+
+function configMiddlewares(app: INestApplication) {
+  app.use(compression());
 }
 
 bootstrap();
