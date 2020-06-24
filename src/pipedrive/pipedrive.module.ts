@@ -1,7 +1,17 @@
-import { Module } from '@nestjs/common';
+import { Module, HttpModule } from '@nestjs/common';
 import { PipedriveService } from './pipedrive.service';
+import { PipedriveHttpService } from './pipedrive.http.service';
+import { PipedriveController } from './pipedrive.controller';
 
 @Module({
-  providers: [PipedriveService]
+  imports: [
+    HttpModule.registerAsync({
+      useClass: PipedriveHttpService,
+    })
+  ],
+  providers: [
+    PipedriveService
+  ],
+  controllers: [PipedriveController]
 })
 export class PipedriveModule {}

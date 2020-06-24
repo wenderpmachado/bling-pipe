@@ -1,16 +1,19 @@
-import { ConfigService } from '@nestjs/config';
-import { Injectable } from '@nestjs/common';
+import { HttpService, Injectable } from '@nestjs/common';
+import { AxiosResponse } from 'axios';
+
+import { PIPEDRIVE_STATUS_TYPE, PIPEDRIVE_STATUS } from './pipedrive-status.type';
 
 @Injectable()
 export class PipedriveService {
-  private token: string;
-  private companyDomain: string;
-  private baseUrl: string;
+  constructor(private httpService: HttpService) {}
 
-  constructor(private configService: ConfigService) {
-    this.companyDomain = this.configService.get<string>('PIPEDRIVE_COMPANY_DOMAIN');
-    this.token = this.configService.get<string>('PIPEDRIVE_API_TOKEN');
+  async findOpportunities(status: PIPEDRIVE_STATUS_TYPE = PIPEDRIVE_STATUS.WON): Promise<AxiosResponse<any>> {
+    let url = `&start=0`;
 
-    this.baseUrl = `https://${this.companyDomain}.pipedrive.com/api/v1/deals?api_token=${this.token}`;
+    if (status) {
+      url += `&status=${status}`
+    }
+
+    return this.httpService.get(url).toPromise();
   }
 }
