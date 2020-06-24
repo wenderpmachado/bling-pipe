@@ -1,5 +1,6 @@
 import * as compression from 'compression';
 import * as helmet from 'helmet';
+import * as rateLimit from 'express-rate-limit';
 import { INestApplication } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
@@ -10,7 +11,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
 
-  configMiddlewares(app);
+  configMiddlewares(app, configService);
   setAPIVersion(app, configService);
   configOpenAPI(app, configService);
 
@@ -39,9 +40,15 @@ function setAPIVersion(app: INestApplication, configService: ConfigService) {
   app.setGlobalPrefix(version);
 }
 
-function configMiddlewares(app: INestApplication) {
+function configMiddlewares(app: INestApplication, configService: ConfigService) {
   app.use(compression());
   app.use(helmet());
+  app.use(
+    rateLimit({
+      windowMs: configService.get<number>('API_RATE_LIMIT'), // default: 15 minutes
+      max: configService.get<number>('API_RATE_LIMIT_MAX'), // limit each IP to 100 requests per windowMs
+    }),
+  )
 }
 
 bootstrap();
