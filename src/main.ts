@@ -15,7 +15,7 @@ async function bootstrap() {
   setAPIVersion(app, configService);
   configOpenAPI(app, configService);
 
-  const port = configService.get('API_PORT') || 3000;
+  const port = process.env.PORT || configService.get('API_PORT') || 3000;
   await app.listen(port);
 }
 
