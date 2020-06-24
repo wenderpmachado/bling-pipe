@@ -10,7 +10,9 @@ import { AppService } from './app.service';
     ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRootAsync({ useClass: MongooseConfigService }),
   ],
-  controllers: [AppController],
+  controllers: [
+    AppController,
+  ],
   providers: [AppService],
 })
 export class AppModule {}
