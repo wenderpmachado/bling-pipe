@@ -1,4 +1,4 @@
-<h1 align="center">BlingPipe - A RESTFul API</h1>
+<h1 align="center">BlingPipe</h1>
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
@@ -8,7 +8,7 @@
 <p align="center">A High Standard RESTFul API</p>
 
 [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](LICENSE.md)
-[![Heroku](https://heroku-badge.herokuapp.com/?app=heroku-badge)](https://linkapi-test.herokuapp.com/v1)
+[![Heroku](https://heroku-badge.herokuapp.com/?app=heroku-badge)](https://bling-pipe.herokuapp.com/v1)
 ![linux-image](https://img.shields.io/travis/nestjs/nest/master.svg?label=linux)
 
 <hr>
@@ -17,9 +17,9 @@ The main objective was to integrate with Pipedrive and Bling platforms.
 
 The project is hosted on Heroku, you can check it at the link below:
 
-- https://linkapi-test.herokuapp.com/v1
-  - [/v1 - First version](https://linkapi-test.herokuapp.com/v1/)
-  - [/docs - OpenAPI](https://linkapi-test.herokuapp.com/docs/)
+- https://bling-pipe.herokuapp.com/v1
+  - [/v1 - First version](https://bling-pipe.herokuapp.com/v1/)
+  - [/docs - OpenAPI](https://bling-pipe.herokuapp.com/docs/)
 
 ## :wrench: Prerequisite
 
@@ -28,7 +28,7 @@ To bring up the RESTFul API in your environment, you **MUST** first:
 * [x] Have an account with [Pipedrive](https://www.pipedrive.com/)
 * [x] Have an account at [Bling](https://bling.com.br/)
 * [x] Clone the repository
-   - `git clone git@github.com:wenderpmachado/linkapi-test.git`
+   - `git clone git@github.com:wenderpmachado/bling-pipe.git`
 * [x] Install the dependencies
    - `yarn install` or` npm install`
 * [x] Set the environment variables
