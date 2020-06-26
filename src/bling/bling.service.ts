@@ -1,13 +1,24 @@
-import { ConfigService } from '@nestjs/config';
 import { Injectable } from '@nestjs/common';
+import { AxiosResponse } from 'axios';
+
+import { IDeal } from './../pipedrive/deal.interface';
+import { BlingHttpService } from './bling.http.service';
+import { GenerateOrderXMLFromDeal } from './helpers/generate-order-xml.helper';
 
 @Injectable()
 export class BlingService {
-  private token: string;
-  private baseUrl: string;
+  #orderEndpoint = 'pedido/json';
 
-  constructor(private configService: ConfigService) {
-    this.token = this.configService.get<string>('BLING_API_TOKEN');
-    this.baseUrl = 'https://bling.com.br/Api/v2/';
+  constructor(private httpService: BlingHttpService) {}
+
+  public get orderEndpoint(): string {
+    return this.#orderEndpoint;
+  }
+
+  async createOrderByPipedriveDeal(deal: IDeal): Promise<AxiosResponse<any>> {
+    const xml = GenerateOrderXMLFromDeal(deal);
+    const url = `${this.orderEndpoint}?xml=${xml}`;
+
+    return await this.httpService.api.post(url);
   }
 }

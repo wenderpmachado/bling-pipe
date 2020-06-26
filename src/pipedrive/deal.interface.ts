@@ -1,23 +1,7 @@
+import { PIPEDRIVE_DEAL_STATUS_TYPE } from './pipedrive-status.type';
 export interface IDeal {
   /** Item code */
-  id: string;
-
-  /** Salesman */
-  user_id: IUser;
-
-  currency: string;
-
-  /** create date */
-  add_time: string;
-
-  /** deal date */
-  close_time?: string;
-
-  /** Organization info */
-  org_id?: IOrganization;
-
-  /** Person info */
-  person_id?: IPerson;
+  id: number;
 
   /** Item description */
   title: string;
@@ -25,18 +9,34 @@ export interface IDeal {
   /** Unit value */
   value: number;
 
+  /** Currency */
+  currency: string;
+
+  /** Create date */
+  add_time?: string;
+
+  /** Deal date */
+  close_time?: string;
+
   /** Item amount */
-  products_count: number;
+  products_count?: number;
+
+  /** Salesman object or id*/
+  user_id: IUser | number;
+
+  /** Organization info */
+  org_name?: string;
+
+  /** Person info */
+  person_name?: string;
+
+  status?: PIPEDRIVE_DEAL_STATUS_TYPE;
 }
 
 interface IUser {
-  id: string;
+  id: number;
 }
 
-interface IOrganization {
-  name: string;
-}
-
-interface IPerson {
-  name: string;
+export interface IDealUpdate {
+  current: IDeal;
 }
