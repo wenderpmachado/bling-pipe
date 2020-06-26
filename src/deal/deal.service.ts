@@ -10,14 +10,13 @@ export class DealService {
   async save(deal: CreateDealDTO): Promise<Deal> {
     const found = await this.dealModel.find({ pipedrive_id: deal.pipedrive_id }).exec();
 
-    let document: Deal;
     if (found && found.length > 0) {
-      document = { ...found[0], ...deal } as Deal;
+      return found[0];
     } else {
-      document = new this.dealModel(deal);
+      const document = new this.dealModel(deal);
+      return document.save();
     }
 
-    return document.save();
   }
 
   async getAll(): Promise<Deal[]> {
@@ -43,7 +42,7 @@ export class DealService {
           }
         }
       }
-    ]).exec();
+    ]);
 
     return aggregated;
   }
