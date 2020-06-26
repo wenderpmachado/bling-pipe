@@ -39,7 +39,7 @@ export class PipedriveController {
     name: 'status',
     required: false,
     example: PIPEDRIVE_DEAL_STATUS.WON,
-    description: 'Status do negócio',
+    description: 'Status do acordo',
     enum: PIPEDRIVE_DEAL_STATUS,
   })
   async findDeals(@Query('status') status?: PIPEDRIVE_DEAL_STATUS_TYPE): Promise<IDeal[]> {
@@ -120,12 +120,11 @@ export class PipedriveController {
   @ApiOperation({ summary: 'Cria uma oferta a partir do objeto especificado' })
   @ApiResponse({ ...OK_RESPONSE })
   @ApiResponse({ ...INVALID_PARAM_EXCEPTION_RESPONSE })
-  @ApiResponse({ ...NO_CONTENT_EXCEPTION_RESPONSE })
-  // @ApiResponse({ ...EXTERNAL_BAD_REQUEST_EXCEPTION_RESPONSE })
+  @ApiResponse({ ...EXTERNAL_BAD_REQUEST_EXCEPTION_RESPONSE })
   @ApiResponse({ ...INTERNAL_SERVER_ERROR_EXCEPTION_RESPONSE })
   @ApiBody({
     required: true,
-    description: 'Negócio a ser processado',
+    description: 'Acordo a ser processado',
     // type: IDeal
   })
   async createDeal(@Body() deal: IDeal): Promise<boolean> {
@@ -138,7 +137,10 @@ export class PipedriveController {
         return false;
       }
 
-      await this.blingService.createOrderByPipedriveDeal(deal);
+      const result = await this.blingService.createOrderByPipedriveDeal(deal);
+      if (result.status !== HttpStatus.OK) {
+        throw new ExternalBadRequestException('Bling');
+      }
 
       return true;
     } catch (error) {
