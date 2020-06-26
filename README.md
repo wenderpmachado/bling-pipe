@@ -10,13 +10,13 @@ The project is hosted on Heroku. It is still in development, but you can already
   - [/v1 - First version](https://linkapi-test.herokuapp.com/v1/)
   - [/docs - OpenAPI](https://linkapi-test.herokuapp.com/docs/)
 
-## Installation
+## :arrow_down: Installation
 
 ```bash
 $ yarn install
 ```
 
-## Running the app
+## :rocket: Running the app
 
 ```bash
 # development
@@ -29,7 +29,11 @@ $ yarn start:dev
 $ yarn start:prod
 ```
 
-## Test
+![alt text](.github/images/open-api.png)
+
+> http://localhost:3000/docs
+
+## :white_check_mark: Test
 
 ```bash
 # unit tests
@@ -50,6 +54,6 @@ $ yarn test:cov
 
 - Author - [Wender Machado](https://www.linkedin.com/in/wenderpmachado)
 
-## License
+## :memo: License
 
-This project is [MIT licensed](LICENSE).
+This project is under the MIT license. See the archive [LICENSE](LICENSE.md) for more details.

@@ -3,7 +3,6 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MongooseConfigService } from './core/config/mongoose-config.service';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { PipedriveModule } from './pipedrive/pipedrive.module';
 import { BlingModule } from './bling/bling.module';
 
@@ -17,6 +16,5 @@ import { BlingModule } from './bling/bling.module';
   controllers: [
     AppController,
   ],
-  providers: [AppService],
 })
 export class AppModule {}

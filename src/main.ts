@@ -30,7 +30,6 @@ function configOpenAPI(app: INestApplication, configService: ConfigService) {
     .setTitle(configService.get('API_TITLE'))
     .setDescription(configService.get('API_DESCRIPTION'))
     .setVersion(version)
-    // .addTag()
     .build();
 
   const document = SwaggerModule.createDocument(app, options);

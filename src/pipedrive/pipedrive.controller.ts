@@ -1,6 +1,6 @@
 import { IDeal, IDealUpdate } from './deal.interface';
 import { Controller, Get, HttpStatus, Query, Post, Body } from '@nestjs/common';
-import { ApiQuery, ApiResponse, ApiBody, ApiExcludeEndpoint, ApiOperation } from '@nestjs/swagger';
+import { ApiQuery, ApiResponse, ApiBody, ApiExcludeEndpoint, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { ExternalBadRequestException } from '../core/exceptions/bad-request.exception';
 import { InternalServerErrorException } from '../core/exceptions/internal-server-error.exception';
@@ -21,6 +21,7 @@ import {
 } from './pipedrive-status.type';
 import { PipedriveService } from './pipedrive.service';
 
+@ApiTags('Pipedrive')
 @Controller('pipedrive/deals')
 export class PipedriveController {
   constructor(
