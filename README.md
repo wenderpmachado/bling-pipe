@@ -1,5 +1,4 @@
-
-# BlingPipe - A RESTFul API
+<h1 align="center">BlingPipe - A RESTFul API</h1>
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
@@ -7,6 +6,10 @@
 </p>
 
 <p align="center">A High Standard RESTFul API</p>
+
+[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](LICENSE.md)
+[![Heroku](https://heroku-badge.herokuapp.com/?app=heroku-badge)](https://linkapi-test.herokuapp.com/v1)
+![linux-image](https://img.shields.io/travis/nestjs/nest/master.svg?label=linux)
 
 <hr>
 
