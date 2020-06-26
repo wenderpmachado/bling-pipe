@@ -6,34 +6,38 @@ export function GenerateOrderXMLFromDeal(deal: IDeal, prettyPrint?: boolean): st
     pedido: {
       ...parseOrder(deal),
       cliente: parseClient(deal),
-      itens: { item: parseDeal(deal) }
+      itens: {
+        item: parseDeal(deal)
+      }
     }
   };
 
   const doc = create({ version: '1.0', encoding: 'UTF-8' }, obj);
   const xml = doc.end({ prettyPrint });
 
-  return xml;
+  return encodeURIComponent(xml);
 }
 
 function parseOrder(deal: IDeal)  {
-  let obs = `user_id:${deal.user_id.id};currency:${deal.currency}`
+  const userId = typeof deal.user_id === 'number' ? deal.user_id : deal.user_id.id;
 
-  if (deal.org_id && deal.person_id) {
-    obs += `;person_id_name:${deal.person_id.name}`
+  let obs = `user_id:${userId};currency:${deal.currency}`
+
+  if (deal.org_name && deal.person_name) {
+    obs += `;person_id_name:${deal.person_name}`
   }
 
   return {
     numero: deal.id,
-    data: deal.add_time,
-    data_saida: deal.close_time,
+    // data: deal.add_time, // TODO: Format date
+    // data_saida: deal.close_time, // TODO: Format date
     obs_internas: obs
   }
 }
 
 function parseClient(deal: IDeal)  {
-  const tipoPessoa = deal.org_id ? 'J' : 'F';
-  const nome = deal.org_id ? deal.org_id.name : deal.person_id.name;
+  const tipoPessoa = deal.org_name ? 'J' : 'F';
+  const nome = deal.org_name ? deal.org_name : deal.person_name;
 
   return {
     nome,
@@ -45,7 +49,7 @@ function parseDeal(deal: IDeal)  {
   return {
     codigo: deal.id,
     descricao: deal.title,
-    qtde: deal.products_count,
+    qtde: 1, // If want to use deal.products_count, divide deal.value by deal.products_count
     vlr_unit: deal.value,
     un: 'un'
   }
