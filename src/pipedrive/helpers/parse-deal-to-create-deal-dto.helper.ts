@@ -7,7 +7,7 @@ export function ParseDealToCreateDealDTO(deal: IDeal): CreateDealDTO {
     title: deal.title,
     value: deal.value,
     currency: deal.currency,
-    won_time: deal.won_time,
+    won_time: new Date(deal.won_time),
     org_name: deal.org_name,
     person_name: deal.person_name,
   }

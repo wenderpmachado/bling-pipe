@@ -7,7 +7,7 @@ export class CreateDealDTO {
   title: string;
   value: number;
   currency: string;
-  won_time: string;
+  won_time: Date;
   org_name?: string;
   person_name?: string;
 }
@@ -36,7 +36,7 @@ export class Deal extends Document {
 
   @ApiProperty()
   @Prop()
-  won_time: string;
+  won_time: Date;
 
   @ApiProperty({ required: false })
   @Prop({ required: false })

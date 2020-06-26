@@ -2,6 +2,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Module } from '@nestjs/common';
 import { DealService } from './deal.service';
 import { Deal, DealSchema } from './deal.schema';
+import { DealController } from './deal.controller';
 
 @Module({
   imports: [
@@ -10,6 +11,7 @@ import { Deal, DealSchema } from './deal.schema';
       schema: DealSchema
     }])
   ],
-  providers: [DealService]
+  providers: [DealService],
+  controllers: [DealController]
 })
 export class DealModule {}

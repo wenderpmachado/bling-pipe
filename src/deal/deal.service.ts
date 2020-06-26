@@ -19,4 +19,32 @@ export class DealService {
 
     return document.save();
   }
+
+  async getAll(): Promise<Deal[]> {
+    return this.dealModel.find();
+  }
+
+  async getOne(id: string): Promise<Deal> {
+    return this.dealModel.findOne({ _id: id });
+  }
+
+  async getAggregated(): Promise<Deal[]> {
+    const aggregated = await this.dealModel.aggregate([
+      {
+        '$group': {
+          '_id': {
+            '$dateToString': {
+              'format': '%d/%m/%Y',
+              'date': '$won_time'
+            }
+          },
+          'total': {
+            '$sum': '$value'
+          }
+        }
+      }
+    ]).exec();
+
+    return aggregated;
+  }
 }

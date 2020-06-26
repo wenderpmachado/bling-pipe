@@ -1,10 +1,7 @@
-import { PipedriveDeal } from './../_common/deal.model';
-import { DealService } from './../deal/deal.service';
-import { DealDTO } from './../deal/deal.schema';
-import { IDeal, IDealUpdate } from '../_common/deal.interface';
-import { Controller, Get, HttpStatus, Query, Post, Body } from '@nestjs/common';
-import { ApiQuery, ApiResponse, ApiBody, ApiExcludeEndpoint, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, HttpStatus, Post, Query } from '@nestjs/common';
+import { ApiBody, ApiExcludeEndpoint, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+import { IDeal, IDealUpdate } from '../_common/deal.interface';
 import { ExternalBadRequestException } from '../_core/exceptions/bad-request.exception';
 import { InternalServerErrorException } from '../_core/exceptions/internal-server-error.exception';
 import { InvalidParamException } from '../_core/exceptions/invalid-param.exception';
@@ -14,8 +11,12 @@ import { INTERNAL_SERVER_ERROR_EXCEPTION_RESPONSE } from '../_core/responses/int
 import { INVALID_PARAM_EXCEPTION_RESPONSE } from '../_core/responses/invalid-param.response';
 import { NO_CONTENT_EXCEPTION_RESPONSE } from '../_core/responses/no-content.response';
 import { OK_RESPONSE } from '../_core/responses/ok.response';
+import { PipedriveDeal } from './../_common/deal.model';
 import { BlingService } from './../bling/bling.service';
+import { DealDTO } from './../deal/deal.schema';
+import { DealService } from './../deal/deal.service';
 import { ExtractDealObject } from './helpers/extract-deal-object.helper';
+import { ParseDealToCreateDealDTO } from './helpers/parse-deal-to-create-deal-dto.helper';
 import {
   IsAPipedriveDealStatusOption,
   PIPEDRIVE_DEAL_STATUS,
@@ -23,7 +24,6 @@ import {
   PIPEDRIVE_DEAL_STATUS_TYPE,
 } from './pipedrive-status.type';
 import { PipedriveService } from './pipedrive.service';
-import { ParseDealToCreateDealDTO } from './helpers/parse-deal-to-create-deal-dto.helper';
 
 @ApiTags('Pipedrive')
 @Controller('pipedrive/deals')
@@ -45,7 +45,7 @@ export class PipedriveController {
     name: 'status',
     required: false,
     example: PIPEDRIVE_DEAL_STATUS.WON,
-    description: 'Status do acordo',
+    description: 'Status da oferta',
     enum: PIPEDRIVE_DEAL_STATUS,
   })
   async findDeals(@Query('status') status?: PIPEDRIVE_DEAL_STATUS_TYPE): Promise<IDeal[]> {
@@ -137,7 +137,7 @@ export class PipedriveController {
   @ApiResponse({ ...INTERNAL_SERVER_ERROR_EXCEPTION_RESPONSE })
   @ApiBody({
     required: true,
-    description: 'Acordo a ser processado',
+    description: 'Oferta a ser processada',
     type: PipedriveDeal
   })
   async createDeal(@Body() deal: IDeal): Promise<DealDTO | boolean> {
