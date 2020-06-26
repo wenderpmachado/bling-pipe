@@ -75,6 +75,9 @@ export class PipedriveController {
 
   @Post('sync')
   @ApiOperation({ summary: 'Sincronizar todas as ofertas ganhas do Pipedrive' })
+  @ApiResponse({ ...OK_RESPONSE })
+  @ApiResponse({ ...EXTERNAL_BAD_REQUEST_EXCEPTION_RESPONSE })
+  @ApiResponse({ ...INTERNAL_SERVER_ERROR_EXCEPTION_RESPONSE })
   async syncWonDeal(): Promise<boolean> {
     try {
       const deals = await this.findDeals();
@@ -130,6 +133,7 @@ export class PipedriveController {
   })
   async createDeal(@Body() deal: IDeal): Promise<boolean> {
     try {
+      console.log('deal:', deal);
       if (!deal) {
         throw new InvalidParamException('deal');
       }
@@ -139,7 +143,7 @@ export class PipedriveController {
       }
 
       const result = await this.blingService.createOrderByPipedriveDeal(deal);
-      if (result.status !== HttpStatus.OK) {
+      if (![HttpStatus.OK, HttpStatus.CREATED].includes(result.status)) {
         throw new ExternalBadRequestException('Bling');
       }
 

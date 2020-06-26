@@ -18,13 +18,11 @@ export class BlingHttpService implements IHttpService {
       baseURL: this.baseURL
     });
 
-    this.axios.interceptors.request.use(this.onRequest);
-  }
-
-  onRequest(config: AxiosRequestConfig): AxiosRequestConfig | Promise<AxiosRequestConfig> {
-    config.url += !config.url ? '?' : '&';
-    config.url += `apikey=${this.token}`;
-    return config;
+    this.axios.interceptors.request.use((config: AxiosRequestConfig) => {
+      config.url += !config.url ? '?' : '&';
+      config.url += `apikey=${this.token}`;
+      return config;
+    });
   }
 
   get api(): AxiosInstance {

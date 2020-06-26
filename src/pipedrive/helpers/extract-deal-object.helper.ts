@@ -10,7 +10,8 @@ export function ExtractDealObject(deal: IDeal): IDeal {
     value,
     products_count,
     org_name,
-    person_name
+    person_name,
+    status
   } = deal;
 
   let { user_id } = deal;
@@ -27,6 +28,7 @@ export function ExtractDealObject(deal: IDeal): IDeal {
     person_name,
     title,
     value,
-    products_count
+    products_count,
+    status
   }
 }

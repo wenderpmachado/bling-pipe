@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
@@ -18,10 +18,10 @@ export class PipedriveHttpService implements IHttpService {
     this.baseURL = `https://${this.companyDomain}.pipedrive.com/api/v1/`;
 
     this.axios = axios.create({
-      baseURL: this.baseURL
+      baseURL: this.baseURL,
     });
 
-    this.axios.interceptors.request.use((config) => {
+    this.axios.interceptors.request.use((config: AxiosRequestConfig) => {
       config.url += !config.url ? '?' : '&';
       config.url += `api_token=${this.token}`;
       return config;

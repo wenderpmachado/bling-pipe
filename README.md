@@ -33,7 +33,7 @@ $ yarn start:prod
 
 > http://localhost:3000/docs
 
-## :white_check_mark: Test
+## :heavy_check_mark: Test
 
 ```bash
 # unit tests
