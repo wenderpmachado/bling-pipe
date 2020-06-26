@@ -1,16 +1,19 @@
-import { IDeal, IDealUpdate } from './deal.interface';
+import { PipedriveDeal } from './../_common/deal.model';
+import { DealService } from './../deal/deal.service';
+import { DealDTO } from './../deal/deal.schema';
+import { IDeal, IDealUpdate } from '../_common/deal.interface';
 import { Controller, Get, HttpStatus, Query, Post, Body } from '@nestjs/common';
 import { ApiQuery, ApiResponse, ApiBody, ApiExcludeEndpoint, ApiOperation, ApiTags } from '@nestjs/swagger';
 
-import { ExternalBadRequestException } from '../core/exceptions/bad-request.exception';
-import { InternalServerErrorException } from '../core/exceptions/internal-server-error.exception';
-import { InvalidParamException } from '../core/exceptions/invalid-param.exception';
-import { NoContentException } from '../core/exceptions/no-content.exception';
-import { EXTERNAL_BAD_REQUEST_EXCEPTION_RESPONSE } from '../core/responses/bad-request.response';
-import { INTERNAL_SERVER_ERROR_EXCEPTION_RESPONSE } from '../core/responses/internal-server-error.response';
-import { INVALID_PARAM_EXCEPTION_RESPONSE } from '../core/responses/invalid-param.response';
-import { NO_CONTENT_EXCEPTION_RESPONSE } from '../core/responses/no-content.response';
-import { OK_RESPONSE } from '../core/responses/ok.response';
+import { ExternalBadRequestException } from '../_core/exceptions/bad-request.exception';
+import { InternalServerErrorException } from '../_core/exceptions/internal-server-error.exception';
+import { InvalidParamException } from '../_core/exceptions/invalid-param.exception';
+import { NoContentException } from '../_core/exceptions/no-content.exception';
+import { EXTERNAL_BAD_REQUEST_EXCEPTION_RESPONSE } from '../_core/responses/bad-request.response';
+import { INTERNAL_SERVER_ERROR_EXCEPTION_RESPONSE } from '../_core/responses/internal-server-error.response';
+import { INVALID_PARAM_EXCEPTION_RESPONSE } from '../_core/responses/invalid-param.response';
+import { NO_CONTENT_EXCEPTION_RESPONSE } from '../_core/responses/no-content.response';
+import { OK_RESPONSE } from '../_core/responses/ok.response';
 import { BlingService } from './../bling/bling.service';
 import { ExtractDealObject } from './helpers/extract-deal-object.helper';
 import {
@@ -20,13 +23,15 @@ import {
   PIPEDRIVE_DEAL_STATUS_TYPE,
 } from './pipedrive-status.type';
 import { PipedriveService } from './pipedrive.service';
+import { ParseDealToCreateDealDTO } from './helpers/parse-deal-to-create-deal-dto.helper';
 
 @ApiTags('Pipedrive')
 @Controller('pipedrive/deals')
 export class PipedriveController {
   constructor(
     private pipedriveService: PipedriveService,
-    private blingService: BlingService
+    private blingService: BlingService,
+    private dealService: DealService
   ) {}
 
   @Get()
@@ -75,18 +80,22 @@ export class PipedriveController {
 
   @Post('sync')
   @ApiOperation({ summary: 'Sincronizar todas as ofertas ganhas do Pipedrive' })
-  @ApiResponse({ ...OK_RESPONSE })
+  @ApiResponse({ ...OK_RESPONSE, type: [DealDTO] })
   @ApiResponse({ ...EXTERNAL_BAD_REQUEST_EXCEPTION_RESPONSE })
   @ApiResponse({ ...INTERNAL_SERVER_ERROR_EXCEPTION_RESPONSE })
-  async syncWonDeal(): Promise<boolean> {
+  async syncWonDeal(): Promise<DealDTO[]> {
     try {
       const deals = await this.findDeals();
 
+      const results = [] as DealDTO[];
       for (const deal of deals) {
-        await this.createDeal(deal);
+        const createdDeal = await this.createDeal(deal);
+        if (createdDeal) {
+          results.push(createdDeal as DealDTO);
+        }
       }
 
-      return true;
+      return results;
     } catch (error) {
       if (!error.status) {
         throw new InternalServerErrorException(error);
@@ -122,18 +131,17 @@ export class PipedriveController {
 
   @Post()
   @ApiOperation({ summary: 'Cria uma oferta a partir do objeto especificado' })
-  @ApiResponse({ ...OK_RESPONSE })
+  @ApiResponse({ ...OK_RESPONSE, type: DealDTO })
   @ApiResponse({ ...INVALID_PARAM_EXCEPTION_RESPONSE })
   @ApiResponse({ ...EXTERNAL_BAD_REQUEST_EXCEPTION_RESPONSE })
   @ApiResponse({ ...INTERNAL_SERVER_ERROR_EXCEPTION_RESPONSE })
   @ApiBody({
     required: true,
     description: 'Acordo a ser processado',
-    // type: IDeal
+    type: PipedriveDeal
   })
-  async createDeal(@Body() deal: IDeal): Promise<boolean> {
+  async createDeal(@Body() deal: IDeal): Promise<DealDTO | boolean> {
     try {
-      console.log('deal:', deal);
       if (!deal) {
         throw new InvalidParamException('deal');
       }
@@ -147,7 +155,10 @@ export class PipedriveController {
         throw new ExternalBadRequestException('Bling');
       }
 
-      return true;
+      const createDealDTO = ParseDealToCreateDealDTO(deal);
+      const createdDeal = await this.dealService.save(createDealDTO);
+
+      return createdDeal;
     } catch (error) {
       if (!error.status) {
         throw new InternalServerErrorException(error);
