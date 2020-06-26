@@ -13,6 +13,8 @@
 
 <hr>
 
+![](.github/images/demo.gif)
+
 The main objective was to integrate with Pipedrive and Bling platforms.
 
 The project is hosted on Heroku, you can check it at the link below:
