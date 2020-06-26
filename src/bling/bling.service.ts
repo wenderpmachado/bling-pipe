@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AxiosResponse } from 'axios';
 
-import { IDeal } from './../pipedrive/deal.interface';
+import { IDeal } from '../_common/deal.interface';
 import { BlingHttpService } from './bling.http.service';
 import { GenerateOrderXMLFromDeal } from './helpers/generate-order-xml.helper';
 

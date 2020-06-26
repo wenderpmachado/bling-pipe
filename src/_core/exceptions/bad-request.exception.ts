@@ -1,5 +1,5 @@
 import { HttpException } from '@nestjs/common';
-import { EXTERNAL_BAD_REQUEST_EXCEPTION_RESPONSE } from './../responses/bad-request.response';
+import { EXTERNAL_BAD_REQUEST_EXCEPTION_RESPONSE } from '../responses/bad-request.response';
 
 export class ExternalBadRequestException extends HttpException {
   constructor(externalServiceName: string) {

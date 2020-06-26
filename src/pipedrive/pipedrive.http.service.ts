@@ -2,7 +2,7 @@ import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
-import { IHttpService } from './../core/interfaces/http-service.interface';
+import { IHttpService } from '../_core/interfaces/http-service.interface';
 
 @Injectable()
 export class PipedriveHttpService implements IHttpService {

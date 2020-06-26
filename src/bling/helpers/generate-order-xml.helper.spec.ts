@@ -1,4 +1,4 @@
-import { IDeal } from './../../pipedrive/deal.interface';
+import { IDeal } from '../../_common/deal.interface';
 import { GenerateOrderXMLFromDeal } from './generate-order-xml.helper';
 
 describe('ExternalBadRequestException', () => {

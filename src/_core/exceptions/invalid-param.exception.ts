@@ -1,5 +1,5 @@
 import { HttpException } from '@nestjs/common';
-import { INVALID_PARAM_EXCEPTION_RESPONSE } from './../responses/invalid-param.response';
+import { INVALID_PARAM_EXCEPTION_RESPONSE } from '../responses/invalid-param.response';
 
 export class InvalidParamException extends HttpException {
   constructor(param: string, values?: string) {

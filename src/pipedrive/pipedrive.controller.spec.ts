@@ -1,6 +1,6 @@
 import { ConfigModule } from '@nestjs/config';
 import { BlingHttpService } from './../bling/bling.http.service';
-import { IDeal } from './deal.interface';
+import { IDeal } from '../_common/deal.interface';
 import { PipedriveHttpService } from './pipedrive.http.service';
 import { BlingService } from './../bling/bling.service';
 import { PipedriveService } from './pipedrive.service';

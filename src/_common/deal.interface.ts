@@ -1,4 +1,5 @@
-import { PIPEDRIVE_DEAL_STATUS_TYPE } from './pipedrive-status.type';
+import { PIPEDRIVE_DEAL_STATUS_TYPE } from '../pipedrive/pipedrive-status.type';
+
 export interface IDeal {
   /** Item code */
   id: number;
@@ -11,6 +12,8 @@ export interface IDeal {
 
   /** Currency */
   currency: string;
+
+  won_time?: string;
 
   /** Create date */
   add_time?: string;

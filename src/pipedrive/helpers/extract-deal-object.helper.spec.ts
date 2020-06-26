@@ -1,4 +1,4 @@
-import { IDeal } from './../../pipedrive/deal.interface';
+import { IDeal } from '../../_common/deal.interface';
 import { ExtractDealObject } from './extract-deal-object.helper';
 
 describe('ExternalBadRequestException', () => {

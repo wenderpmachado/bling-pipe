@@ -1,10 +1,11 @@
-import { IDeal } from './../deal.interface';
+import { IDeal } from '../../_common/deal.interface';
 
 export function ExtractDealObject(deal: IDeal): IDeal {
   const {
     id,
     currency,
     add_time,
+    won_time,
     close_time,
     title,
     value,
@@ -23,6 +24,7 @@ export function ExtractDealObject(deal: IDeal): IDeal {
     user_id,
     currency,
     add_time,
+    won_time,
     close_time,
     org_name,
     person_name,

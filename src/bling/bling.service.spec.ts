@@ -1,5 +1,5 @@
 import { BlingHttpService } from './bling.http.service';
-import { IDeal } from './../pipedrive/deal.interface';
+import { IDeal } from '../_common/deal.interface';
 import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { BlingService } from './bling.service';

@@ -1,5 +1,5 @@
 import { create } from 'xmlbuilder2';
-import { IDeal } from './../../pipedrive/deal.interface';
+import { IDeal } from '../../_common/deal.interface';
 
 export function GenerateOrderXMLFromDeal(deal: IDeal, prettyPrint?: boolean): string {
   const obj = {
