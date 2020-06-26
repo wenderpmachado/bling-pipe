@@ -13,7 +13,7 @@
 
 <hr>
 
-![](.github/images/demo.gif)
+https://www.loom.com/share/0f7f228229834f839dae0e2e4faf0f59
 
 The main objective was to integrate with Pipedrive and Bling platforms.
 
