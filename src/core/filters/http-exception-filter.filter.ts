@@ -17,8 +17,6 @@ export class HttpExceptionFilter<T extends HttpException> extends BaseExceptionF
       timestamp: new Date().toISOString()
     }
 
-    console.log('body:', body);
-
     return response.status(statusCode).json(body);
   }
 }
