@@ -1,19 +1,28 @@
-import { HttpService, Injectable } from '@nestjs/common';
 import { AxiosResponse } from 'axios';
+import { Injectable } from '@nestjs/common';
+import { PipedriveHttpService } from './pipedrive.http.service';
 
-import { PIPEDRIVE_STATUS_TYPE, PIPEDRIVE_STATUS } from './pipedrive-status.type';
+import { PIPEDRIVE_DEAL_STATUS_TYPE, PIPEDRIVE_DEAL_STATUS } from './pipedrive-status.type';
 
 @Injectable()
 export class PipedriveService {
-  constructor(private httpService: HttpService) {}
+  private dealsEndpoint = 'deals';
 
-  async findOpportunities(status: PIPEDRIVE_STATUS_TYPE = PIPEDRIVE_STATUS.WON): Promise<AxiosResponse<any>> {
-    let url = `&start=0`;
+  constructor(private httpService: PipedriveHttpService) {}
+
+  async findDeals(
+    status: PIPEDRIVE_DEAL_STATUS_TYPE = PIPEDRIVE_DEAL_STATUS.WON,
+    start = 0,
+    limit = 0,
+    sort = 'id',
+    sortDirection = 'DESC'
+  ): Promise<AxiosResponse<any>> {
+    let url = `${this.dealsEndpoint}?start=${start}&limit=${limit}&sort=${sort} ${sortDirection}`;
 
     if (status) {
       url += `&status=${status}`
     }
 
-    return this.httpService.get(url).toPromise();
+    return this.httpService.api.get(encodeURI(url));
   }
 }
