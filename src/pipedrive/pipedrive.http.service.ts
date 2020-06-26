@@ -1,23 +1,34 @@
+import axios, { AxiosInstance } from 'axios';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Injectable, HttpModuleOptionsFactory, HttpModuleOptions, HttpService } from '@nestjs/common';
+
+import { IHttpService } from './../core/interfaces/http-service.interface';
 
 @Injectable()
-export class PipedriveHttpService implements HttpModuleOptionsFactory {
+export class PipedriveHttpService implements IHttpService {
   private token: string;
   private companyDomain: string;
-  private baseUrl: string;
+  private baseURL: string;
+  private axios: AxiosInstance;
 
   constructor(private configService: ConfigService) {
     this.companyDomain = this.configService.get<string>('PIPEDRIVE_COMPANY_DOMAIN');
     this.token = this.configService.get<string>('PIPEDRIVE_API_TOKEN');
 
-    // FIXME: Remove api_token from url
-    this.baseUrl = `https://${this.companyDomain}.pipedrive.com/api/v1/deals?api_token=${this.token}`;
+    this.baseURL = `https://${this.companyDomain}.pipedrive.com/api/v1/`;
+
+    this.axios = axios.create({
+      baseURL: this.baseURL
+    });
+
+    this.axios.interceptors.request.use((config) => {
+      config.url += !config.url ? '?' : '&';
+      config.url += `api_token=${this.token}`;
+      return config;
+    });
   }
 
-  createHttpOptions(): HttpModuleOptions {
-    return {
-      baseURL: this.baseUrl
-    };
+  get api(): AxiosInstance {
+    return this.axios;
   }
 }

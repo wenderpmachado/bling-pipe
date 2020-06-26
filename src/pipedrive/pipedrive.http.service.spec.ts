@@ -22,4 +22,8 @@ describe('PipedriveHttpService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
+
+  it('should have api getter', () => {
+    expect(service.api).toBeDefined();
+  });
 });
