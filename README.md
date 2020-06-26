@@ -13,9 +13,9 @@
 
 <hr>
 
-https://www.loom.com/share/0f7f228229834f839dae0e2e4faf0f59
+## See the application demonstration NOW at the following link: https://www.loom.com/share/0f7f228229834f839dae0e2e4faf0f59
 
-The main objective was to integrate with Pipedrive and Bling platforms.
+The main objective was to integrate with Pipedrive and Bling platforms, saving results to MongoDB.
 
 The project is hosted on Heroku, you can check it at the link below:
 
