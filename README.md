@@ -13,10 +13,6 @@
 
 <hr>
 
-[![Test Image 1](.github/images/demo.png)](https://www.loom.com/share/0f7f228229834f839dae0e2e4faf0f59)
-
-<hr>
-
 The main objective was to integrate with Pipedrive and Bling platforms, saving results to MongoDB.
 
 The project is hosted on Heroku, you can check it at the link below:
@@ -61,12 +57,17 @@ The project has implemented unit tests:
 $ yarn test
 ```
 
-In addition, we can see the test coverage:
+In addition, we can see the [test coverage](.github/images/code-coverage.png):
 
 ```bash
 # test coverage
 $ yarn test:cov
 ```
+<hr>
+
+[![Test Image 1](.github/images/demo.png)](https://www.loom.com/share/0f7f228229834f839dae0e2e4faf0f59)
+
+<hr>
 
 ## :wave: Stay in touch
 
