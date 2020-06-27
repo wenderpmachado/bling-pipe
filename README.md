@@ -13,7 +13,9 @@
 
 <hr>
 
-## See the application demonstration NOW at the following link: https://www.loom.com/share/0f7f228229834f839dae0e2e4faf0f59
+[![Test Image 1](.github/images/demo.png)](https://www.loom.com/share/0f7f228229834f839dae0e2e4faf0f59)
+
+<hr>
 
 The main objective was to integrate with Pipedrive and Bling platforms, saving results to MongoDB.
 
